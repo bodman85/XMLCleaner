@@ -1,0 +1,88 @@
+Private Sub Import_Btn_Click()
+    Dim edrpou
+    Const lastColumnNumber As Integer = 82
+    
+    Dim c
+    Dim wkb As Workbook
+    Dim wks As Worksheet
+
+    Dim rgc As Range
+    With ThisWorkbook.Worksheets("Sheet1")
+        edrpou = .Range("H2").Value
+        'c = .Range("C31").Value
+    End With
+    Set wkb = Workbooks.Open(ThisWorkbook.Path & "\FILE_2.xlsx")
+    Set wks = wkb.Worksheets(1)
+    Set FoundRow = wks.Range("B:B").Find(What:=edrpou).EntireRow
+               
+    If FoundRow Is Nothing Then
+      MsgBox "Value of EDRPOU is not found in column B", vbExclamation
+    Else
+        For Each c In FoundRow.Cells
+        If (c.Column = lastColumnNumber) Then Exit For
+        Debug.Print c.Value
+        Next c
+    'MsgBox "Found this: " & FoundRow
+    'Set rgc = FoundCell.Offset(0, 7)
+    'rgh.Value = c
+
+    MsgBox "Found: " & FoundRow.Columns.Item(2)
+    End If
+    
+    With ThisWorkbook.Worksheets("Sheet1")
+        .Range("E2").Offset(1, 0).Value = FoundRow.Columns.Item(3)
+        .Range("E2").Offset(2, 0).Value = FoundRow.Columns.Item(5)
+    End With
+    
+    'wkb.Close SaveChanges:=False
+End Sub
+
+==================================
+
+Private Sub Import_Btn_Click()
+    Dim edrpou
+
+    Dim currentWorkbook As Workbook
+    Dim currentWorksheet As Worksheet
+
+    With ThisWorkbook.Worksheets("Sheet1")
+        edrpou = .Range("H2").Value
+    End With
+    
+    Set currentWorkbook = Workbooks.Open(ThisWorkbook.Path & "\FILE_2.xlsx")
+    Set currentWorksheet = currentWorkbook.Worksheets(1)
+    Set FoundRow = currentWorksheet.Range("B:B").Find(What:=edrpou).EntireRow
+               
+    If FoundRow Is Nothing Then
+      MsgBox "Value of EDRPOU is not found in column B", vbExclamation
+    End If
+    
+    With ThisWorkbook.Worksheets("Sheet1").Range("D2")
+        .Offset(1, 0).Value = FoundRow.Columns.Item("D")
+        .Offset(2, 0).Value = FoundRow.Columns.Item("E")
+        
+        .Offset(4, 0).Value = FoundRow.Columns.Item("F")
+        
+        .Offset(6, 0).Value = FoundRow.Columns.Item("G")
+        .Offset(7, 0).Value = FoundRow.Columns.Item("H")
+        .Offset(8, 0).Value = FoundRow.Columns.Item("I")
+        
+        .Offset(10, 0).Value = FoundRow.Columns.Item("J")
+        
+        .Offset(12, 0).Value = FoundRow.Columns.Item("K")
+        .Offset(13, 0).Value = FoundRow.Columns.Item("L")
+        
+        .Offset(15, 0).Value = FoundRow.Columns.Item("M")
+        
+        .Offset(17, 0).Value = FoundRow.Columns.Item("N")
+        
+        .Offset(19, 0).Value = FoundRow.Columns.Item("O")
+        .Offset(20, 0).Value = FoundRow.Columns.Item("P")
+        .Offset(21, 0).Value = FoundRow.Columns.Item("Q")
+        
+    End With
+    
+    currentWorkbook.Close SaveChanges:=False
+End Sub
+
+===================================
